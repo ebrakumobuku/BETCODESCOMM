@@ -1,33 +1,13 @@
-const fetch = require('node-fetch');
-const FormData = require('form-data');
+const { createClient } = require("@supabase/supabase-js");
 
-exports.handler = async function (event) {
-    if (event.httpMethod !== "POST") {
-        return { statusCode: 405, body: "Method Not Allowed" };
-    }
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
 
-    const SUPABASE_URL = process.env.SUPABASE_URL;
-    const SUPABASE_KEY = process.env.SUPABASE_KEY;
+exports.handler = async (event) => {
+    const { nickname, message } = JSON.parse(event.body);
 
-    const formData = new FormData();
-    const { nickname, message, image } = JSON.parse(event.body);
+    const { data, error } = await supabase.from("messages").insert([{ nickname, message }]);
 
-    formData.append("nickname", nickname);
-    formData.append("message", message);
-    if (image) formData.append("image", image);
+    if (error) return { statusCode: 500, body: JSON.stringify(error) };
 
-    const response = await fetch(`${SUPABASE_URL}/rest/v1/posts`, {
-        method: "POST",
-        headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": `Bearer ${SUPABASE_KEY}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ nickname, message, image })
-    });
-
-    return {
-        statusCode: response.status,
-        body: JSON.stringify(await response.json())
-    };
+    return { statusCode: 200, body: JSON.stringify(data) };
 };
