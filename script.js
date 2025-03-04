@@ -1,54 +1,46 @@
-const SUPABASE_URL = "YOUR_SUPABASE_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+document.addEventListener("DOMContentLoaded", fetchPosts);
 
-const { createClient } = supabase;
-const db = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+function fetchPosts() {
+    fetch('/.netlify/functions/fetchPosts')
+        .then(response => response.json())
+        .then(data => {
+            let chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = "";
+            data.forEach(post => {
+                let postDiv = document.createElement("div");
+                postDiv.innerHTML = `<strong>${post.nickname}:</strong> ${post.message}`;
+                if (post.image) {
+                    let img = document.createElement("img");
+                    img.src = post.image;
+                    img.style.width = "100px";
+                    postDiv.appendChild(img);
+                }
+                chatBox.appendChild(postDiv);
+            });
+        });
+}
 
-document.getElementById('postBtn').addEventListener('click', () => {
-    document.getElementById('postFormContainer').classList.remove('hidden');
-});
+function submitPost() {
+    let nickname = document.getElementById('nickname').value;
+    let betCode = document.getElementById('betCode').value;
+    let imageUpload = document.getElementById('imageUpload').files[0];
 
-document.getElementById('closeForm').addEventListener('click', () => {
-    document.getElementById('postFormContainer').classList.add('hidden');
-});
-
-document.getElementById('postForm').addEventListener('submit', async (event) => {
-    event.preventDefault();
-
-    const nickname = document.getElementById('nickname').value;
-    const betCodes = document.getElementById('betCodes').value;
-    const telegramLink = document.getElementById('telegramLink').value;
-    
-    const { data, error } = await db.from('posts').insert([
-        { nickname, betCodes, telegramLink }
-    ]);
-
-    if (error) {
-        console.error("Error posting:", error.message);
-    } else {
-        document.getElementById('postFormContainer').classList.add('hidden');
-        fetchPosts(); // Refresh posts
-    }
-});
-
-async function fetchPosts() {
-    const { data, error } = await db.from('posts').select("*").order("created_at", { ascending: false });
-
-    if (error) {
-        console.error("Error fetching posts:", error.message);
+    if (!nickname.trim()) {
+        alert("Nickname is required!");
         return;
     }
 
-    const postsContainer = document.getElementById('postsContainer');
-    postsContainer.innerHTML = "";
+    let formData = new FormData();
+    formData.append("nickname", nickname);
+    formData.append("message", betCode);
+    if (imageUpload) formData.append("image", imageUpload);
 
-    data.forEach(post => {
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
-        postElement.innerHTML = `<strong>${post.nickname}</strong><br>${post.betCodes || ''}<br>${post.telegramLink ? `<a href="${post.telegramLink}" target="_blank">Telegram</a>` : ''}`;
-        postsContainer.appendChild(postElement);
+    fetch('/.netlify/functions/createPost', {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.json())
+    .then(() => {
+        fetchPosts();
     });
 }
-
-// Load posts on page load
-fetchPosts();
