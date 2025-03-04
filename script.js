@@ -1,46 +1,39 @@
-document.addEventListener("DOMContentLoaded", fetchPosts);
-
-function fetchPosts() {
-    fetch('/.netlify/functions/fetchPosts')
-        .then(response => response.json())
-        .then(data => {
-            let chatBox = document.getElementById('chat-box');
-            chatBox.innerHTML = "";
-            data.forEach(post => {
-                let postDiv = document.createElement("div");
-                postDiv.innerHTML = `<strong>${post.nickname}:</strong> ${post.message}`;
-                if (post.image) {
-                    let img = document.createElement("img");
-                    img.src = post.image;
-                    img.style.width = "100px";
-                    postDiv.appendChild(img);
-                }
-                chatBox.appendChild(postDiv);
-            });
-        });
-}
-
-function submitPost() {
-    let nickname = document.getElementById('nickname').value;
-    let betCode = document.getElementById('betCode').value;
-    let imageUpload = document.getElementById('imageUpload').files[0];
-
-    if (!nickname.trim()) {
-        alert("Nickname is required!");
+document.getElementById("postButton").addEventListener("click", async () => {
+    const nickname = document.getElementById("nickname").value.trim();
+    const message = document.getElementById("message").value.trim();
+    
+    if (!nickname || !message) {
+        alert("Nickname and message are required!");
         return;
     }
 
-    let formData = new FormData();
-    formData.append("nickname", nickname);
-    formData.append("message", betCode);
-    if (imageUpload) formData.append("image", imageUpload);
+    const postData = { nickname, message, timestamp: new Date().toISOString() };
 
-    fetch('/.netlify/functions/createPost', {
+    const response = await fetch("/.netlify/functions/postMessage", {
         method: "POST",
-        body: formData
-    })
-    .then(response => response.json())
-    .then(() => {
-        fetchPosts();
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(postData)
+    });
+
+    if (response.ok) {
+        document.getElementById("message").value = "";
+        loadFeed();
+    } else {
+        alert("Failed to post message.");
+    }
+});
+
+async function loadFeed() {
+    const response = await fetch("/.netlify/functions/getMessages");
+    const messages = await response.json();
+    const feed = document.getElementById("feed");
+
+    feed.innerHTML = "";
+    messages.forEach(msg => {
+        const div = document.createElement("div");
+        div.innerHTML = `<strong>${msg.nickname}:</strong> ${msg.message} <br><small>${new Date(msg.timestamp).toLocaleString()}</small>`;
+        feed.appendChild(div);
     });
 }
+
+loadFeed();
