@@ -1,48 +1,44 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    background-color: #1e002e;
+    color: white;
+    text-align: center;
 }
 
-header {
-    background-color: #007bff;
-    color: white;
+.chat-container {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    background-color: #3d0057;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#chat-box {
+    height: 300px;
+    overflow-y: scroll;
+    border: 1px solid #ffffff;
     padding: 10px;
+    margin-bottom: 10px;
+    background-color: #25003d;
+}
+
+.post-form {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
 }
 
 button {
-    padding: 10px;
-    background-color: #28a745;
+    background-color: #8a00c2;
     color: white;
+    padding: 10px;
     border: none;
     cursor: pointer;
-}
-
-#postsContainer {
-    margin: 20px;
-}
-
-.post {
-    background: white;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 5px;
-}
-
-.hidden {
-    display: none;
-}
-
-#postFormContainer {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
 }
