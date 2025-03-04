@@ -7,29 +7,18 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bet Code Community</h1>
-        <button id="postBtn">Post</button>
-    </header>
-
-    <main>
-        <div id="postsContainer">
-            <!-- Posts will appear here dynamically -->
+    <div class="chat-container">
+        <h1>🔮 Bet Code Community</h1>
+        <div id="chat-box">
+            <!-- Posts will be dynamically added here -->
         </div>
-    </main>
-
-    <!-- Hidden Post Form -->
-    <div id="postFormContainer" class="hidden">
-        <form id="postForm">
-            <input type="text" id="nickname" placeholder="Nickname (Required)" required>
-            <textarea id="betCodes" placeholder="Enter bet codes (optional)"></textarea>
+        <div class="post-form">
+            <input type="text" id="nickname" placeholder="Enter your nickname (Required)" required>
+            <textarea id="betCode" placeholder="Enter bet codes, Telegram links, or message..."></textarea>
             <input type="file" id="imageUpload">
-            <input type="url" id="telegramLink" placeholder="Telegram link (optional)">
-            <button type="submit">Submit Post</button>
-            <button type="button" id="closeForm">Cancel</button>
-        </form>
+            <button onclick="submitPost()">Post</button>
+        </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
