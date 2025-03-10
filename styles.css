@@ -1,46 +1,26 @@
 body {
-    background-color: #1a001a;
-    color: white;
+    background-color: #121212;
+    color: #ffffff;
     font-family: Arial, sans-serif;
-    text-align: center;
 }
 
 header {
-    background-color: #330033;
+    display: flex;
+    justify-content: space-between;
     padding: 10px;
+    background-color: #1f1f1f;
 }
 
-h1 {
-    margin: 0;
-    font-size: 20px;
-}
-
-#feed {
-    max-width: 500px;
-    margin: 20px auto;
-    height: 400px;
-    overflow-y: auto;
-    border: 1px solid #660066;
-    padding: 10px;
-}
-
-#post-form {
-    max-width: 500px;
-    margin: auto;
-    padding: 10px;
-    border-top: 2px solid #660066;
-}
-
-input, textarea {
-    width: 100%;
-    margin-bottom: 10px;
-    padding: 8px;
-}
-
-button {
-    background-color: #660066;
+.btn {
+    background: teal;
     color: white;
-    border: none;
     padding: 10px;
-    cursor: pointer;
+    text-decoration: none;
+}
+
+#postModal {
+    display: none;
+    position: fixed;
+    background: #222;
+    padding: 20px;
 }
