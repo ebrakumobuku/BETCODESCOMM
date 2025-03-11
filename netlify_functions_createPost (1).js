@@ -1,13 +1,35 @@
-const { createClient } = require('@supabase/supabase-js');
+document.getElementById('postBetForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+    const nickname = document.getElementById('nickname').value;
+    const betCode = document.getElementById('betCode').value;
+    const betImage = document.getElementById('betImage').files[0];
 
-exports.handler = async (event) => {
-    if (event.httpMethod !== 'POST') return { statusCode: 405 };
+    if (!nickname || !betCode) {
+        alert("Nickname and bet code are required.");
+        return;
+    }
 
-    const { nickname, betCode } = JSON.parse(event.body);
-    const { data, error } = await supabase.from('posts').insert([{ nickname, betCode }]);
+    const formData = new FormData();
+    formData.append('nickname', nickname);
+    formData.append('betCode', betCode);
+    if (betImage) {
+        formData.append('betImage', betImage);
+    }
 
-    if (error) return { statusCode: 500, body: JSON.stringify(error) };
-    return { statusCode: 200, body: JSON.stringify(data) };
-};
+    try {
+        const response = await fetch('/.netlify/functions/createPost', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            alert("Post submitted successfully!");
+            location.reload();
+        } else {
+            alert("Error submitting post.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+});
