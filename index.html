@@ -3,21 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodesHubNG - Bet Code Sharing Community</title>
+    <title>CodesHubNG - Bet Code Community</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts/fetchPosts.js"></script>
+    <script defer src="scripts/createPost.js"></script>
+    <script defer src="scripts/auth.js"></script>
 </head>
 <body>
-
     <header>
         <h1>CodesHubNG</h1>
-        <a href="community.html" class="btn">Enter Community</a>
+        <nav>
+            <ul>
+                <li><a href="#" id="communityLink">Community <span id="notifCount">0</span></a></li>
+                <li><a href="#" id="listTelegram">List Your Telegram</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <h2>Featured Telegram Channels</h2>
-        <div id="telegramListings"></div>
+        <section id="telegramListings">
+            <h2>Featured Telegram Betting Groups</h2>
+            <div id="telegramContainer">
+                <!-- Telegram listings will be dynamically added here -->
+            </div>
+        </section>
+
+        <section id="communityPosts">
+            <h2>Live Community Feed</h2>
+            <div id="postContainer">
+                <!-- Posts from the community will be loaded here -->
+            </div>
+        </section>
+
+        <section id="postForm">
+            <h3>Share Your Betting Codes & Telegram Links</h3>
+            <form id="postBetForm">
+                <input type="text" id="nickname" placeholder="Your Nickname" required>
+                <textarea id="betCode" placeholder="Enter your bet codes or Telegram links"></textarea>
+                <input type="file" id="betImage">
+                <button type="submit">Post</button>
+            </form>
+        </section>
     </main>
 
-    <script src="script.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>
