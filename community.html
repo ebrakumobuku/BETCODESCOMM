@@ -3,25 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community - CodesHubNG</title>
+    <title>Community</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h2>Community Posts</h2>
 
-    <header>
-        <h1>CodesHubNG Community</h1>
-        <button id="postButton">Post Bet Code</button>
-    </header>
+    <section id="community-feed"></section>
 
-    <section id="communityFeed"></section>
+    <form id="post-form">
+        <input type="text" id="nickname" placeholder="Nickname" required>
+        <textarea id="message" placeholder="Share your bet codes & proof"></textarea>
+        <input type="file" id="proof-image">
+        <button type="submit">Post</button>
+    </form>
 
-    <div id="postModal">
-        <input type="text" id="nickname" placeholder="Enter your nickname">
-        <textarea id="betCode" placeholder="Share your bet code and Telegram link"></textarea>
-        <input type="file" id="imageUpload">
-        <button id="submitPost">Post</button>
-    </div>
-
-    <script src="script.js"></script>
+    <script src="fetchCommunity.js"></script>
 </body>
 </html>
