@@ -6,7 +6,7 @@ document.getElementById("communityForm").addEventListener("submit", async (e) =>
   e.preventDefault();
   const nickname = document.getElementById("communityNickname").value.trim();
   const message = document.getElementById("communityMessage").value.trim();
-  // Skipping image upload for simplicity.
+  // For simplicity, image upload is not implemented here.
   if (!nickname || !message) {
     alert("Nickname and message are required.");
     return;
@@ -39,7 +39,7 @@ async function loadCommunityPosts() {
     posts.forEach(post => {
       const div = document.createElement("div");
       div.classList.add("post");
-      div.innerHTML = `<strong>${post.nickname}</strong>: ${post.message}<br>
+      div.innerHTML = `<strong>${post.nickname}</strong>: ${post.message} <br>
                        <small>${new Date(post.created_at).toLocaleString()}</small>`;
       container.appendChild(div);
     });
