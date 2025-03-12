@@ -10,8 +10,10 @@ async function loadListings() {
     container.innerHTML = "";
     listings.forEach(listing => {
       const div = document.createElement("div");
-      div.innerHTML = `<h3>${listing.channel_name}</h3>
-                       <p><a href="${listing.channel_link}" target="_blank">Join Channel</a></p>`;
+      div.innerHTML = `
+        <h3>${listing.channel_name}</h3>
+        <p><a href="${listing.channel_link}" target="_blank">Join Channel</a></p>
+      `;
       container.appendChild(div);
     });
   } catch (error) {
