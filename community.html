@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community - CodesHubNG</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="community.js"></script>
 </head>
 <body>
-    <h2>Community Posts</h2>
+  <header>
+    <div class="logo">
+      <h1>CodesHubNG Community</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="listings.html">My Listings</a></li>
+        <li><a href="community.html">Community <span id="notifCountCommunity">0</span></a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <section id="community-feed"></section>
-
-    <form id="post-form">
-        <input type="text" id="nickname" placeholder="Nickname" required>
-        <textarea id="message" placeholder="Share your bet codes & proof"></textarea>
-        <input type="file" id="proof-image">
+  <main>
+    <section id="communityFeed">
+      <h2>Live Community Feed</h2>
+      <div id="feedContainer">
+        <!-- Community posts will be loaded here -->
+      </div>
+    </section>
+    <section id="postCommunity">
+      <h3>Share Your Bet Codes & Proofs</h3>
+      <form id="communityForm">
+        <input type="text" id="communityNickname" placeholder="Nickname" required>
+        <textarea id="communityMessage" placeholder="Enter your bet codes, proofs, and Telegram links"></textarea>
+        <input type="file" id="communityImage">
         <button type="submit">Post</button>
-    </form>
-
-    <script src="fetchCommunity.js"></script>
+      </form>
+    </section>
+  </main>
 </body>
 </html>
