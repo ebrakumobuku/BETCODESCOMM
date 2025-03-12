@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodesHubNG - Bet Community</title>
+  <title>CodesHubNG - Home</title>
   <link rel="stylesheet" href="styles.css">
-  <script defer src="script.js"></script>
+  <script defer src="fetchListings.js"></script>
 </head>
 <body>
   <header>
@@ -20,14 +20,16 @@
       </ul>
     </nav>
   </header>
-
+  
   <main>
     <section id="listingsSection">
-      <h2>Featured Telegram Channels</h2>
+      <h2>Featured Telegram Listings</h2>
       <div id="listingsFeed">
-        <!-- Listings will be loaded here via Netlify function -->
+        <!-- Listings will be loaded here dynamically -->
       </div>
-      <button id="listTelegramBtn" onclick="location.href='listings.html'">List Your Telegram Channel</button>
+      <button id="listTelegramBtn" onclick="location.href='listings.html'">
+        List Your Telegram Channel
+      </button>
     </section>
   </main>
 </body>
