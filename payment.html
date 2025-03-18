@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Instructions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Payment Instructions</h2>
+        <p>Please transfer <strong>₦10,000</strong> to:</p>
+
+        <div class="account-details">
+            <p><strong>Account Name:</strong> Ebrakumo Buku</p>
+            <p><strong>Bank Name:</strong> Sterling Bank PLC</p>
+            <p><strong>Account Number:</strong> 8521194568</p>
+        </div>
+
+        <p>Use your <strong>Telegram Channel Name</strong> as the narration.</p>
+        <button id="paid-button">I Have Paid</button>
+        <p class="info-text">Your listing will go live once payment is confirmed.</p>
+        <p>For any issues, contact <strong>09058919385</strong></p>
+    </div>
+
+    <script>
+        document.getElementById("paid-button").addEventListener("click", async () => {
+            const channelName = localStorage.getItem("channel_name") || "Unknown";
+            
+            const response = await fetch("/.netlify/functions/markPaid", {
+                method: "POST",
+                body: JSON.stringify({ channel_name: channelName }),
+            });
+
+            if (response.ok) {
+                alert("Listing would go live once payment is confirmed.");
+            } else {
+                alert("Error processing payment.");
+            }
+        });
+    </script>
+</body>
+</html>
